@@ -19,9 +19,11 @@ prontera,169,180,1	script	Costume Trader 	2_SLOT_MACHINE,{
 		} else if (.@r >= 95 && .@r <= 98) {
 			.@size = getarraysize(.@costumesGood);
 			.@id = .@costumesGood[rand(.@size)];
+			announce "O jogador " + strcharinfo(0) + " acaba de receber um costume de 5%",bc,0x33FF33|bc_all;
 		} else {
 			.@size = getarraysize(.@costumeGod);
 			.@id = .@costumeGod[rand(.@size)];
+			announce "O jogador " + strcharinfo(0) + " acaba de receber um costume de 1%",bc,0x33FF33|bc_all;
 		}
 	
 		return .@id;
