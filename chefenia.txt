@@ -1,0 +1,122 @@
+- script Sample -1,{
+OnClock0100:
+OnClock0500:
+OnClock0900:
+OnClock1300:
+OnClock1700:
+for( set .@i,0; .@i < 3; set .@i,.@i + 1 ){
+announce "RObustnia Event will Open within "+( 3 - .@i )+" Minutes.",0;
+sleep 60000;
+}
+enablenpc "bsw";
+announce "RObustnia Event Opened, Party leader's with 4-10 Members may go in!.",0;
+sleep ( 30 * 60000 );
+announce "RObustnia Event Closed.",0;
+OnInit:
+disablenpc "bsw";
+end;
+}
+
+
+lighthalzen,162,105,4 script RObustnia Staff::bsw 105,{
+function CheckBaseLevel;
+mes "[Red]";
+mes "Halt! Who approaches?";
+mes "I know a Place where chaos rules the land.";
+mes "I found it while wondering the plains of RObust.";
+mes "I am an adventurer.";
+mes "Haha~";
+next;
+mes "[Red]";
+mes "What? My name is...";
+mes "'RObustnia Staff'?? Urghh no...";
+mes "Well, my name is not so important.";
+mes "Sometimes you should be generous.";
+mes "No time for considering that kind of small stuff";
+mes "when you have to concentrate on more important things.";
+next;
+mes "[Red]";
+mes "Hum... anyway I want to say... something..";
+mes "While I was travelling through some places,";
+mes "I found a really dreadful and fearful place.";
+next;
+mes "[Red]";
+mes "Most of the time when you come to a place,";
+mes "there is one strong and fearful monster.";
+mes "Isn't it?";
+next;
+mes "[Red]";
+mes "But... but... in there...";
+mes "There are lots of fearful and strong monsters in there...";
+mes "That was really frightful, i even heared rumors of Satan being spotted there.";
+next;
+mes "[Red]";
+mes "If I had reacted a bit later... a few seconds...";
+mes "I might have been killed.";
+next;
+mes "[Red]";
+mes "What?";
+mes "You want to go in there?";
+mes "Oh~ Boy~ you didn't get me.";
+mes "In there.......";
+next;
+mes "[Red]";
+mes "Uh... you already know?";
+mes "Although you know the place, you want to go in...";
+mes "Good, I will send you there.";
+mes "But after you went there, don't hold";
+mes "a grudge against me. Also it costs 5,000 zeny.";
+next;
+mes "[Red]";
+
+if( !getcharid(1) ){
+mes "You need a Party.";
+}else{
+mes "Would you really like to take the challenge??";
+mes "Ok, just choose the course.";
+set .@room, select("First","Second","Third","Fourth");
+getpartymember getcharid(1),1;
+if( getcharid(0) != getpartyleader( getcharid(1),2 ) ){
+mes "Only Party Leader can decide to go or not.";
+}else if( !CheckBaseLevel( getcharid(1) ) ){
+mes "All party Member must be level 150.";
+}else if( $@partymembercount < 4 || $@partymembercount > 10 ){
+mes "You need total of 4 - 10 Party Members.";
+}else if (Zeny < 499999){
+mes "You need 500,000 Zeny.";
+}else{
+set Zeny, Zeny - 500000;
+warpparty "bossnia_0"+.@room,rand(199,200),rand(199,200),getcharid(1);
+end;
+}
+}
+close;
+
+function CheckBaseLevel {
+set .@Leader,getpartyleader( getarg(0),1 );
+getpartymember getarg(0),2;
+for( set .@i,0; .@i < $@partymembercount; set .@i,.@i + 1 )
+if( attachrid( $@partymemberaid[.@i] ) )
+if( BaseLevel < 150 ){
+attachrid(.@Leader);
+return 0;
+}
+attachrid(.@Leader);
+return 1;
+}
+
+OnPCDieEvent:
+if( compare( strcharinfo(3),"bossnia_0" ) ){
+warpparty "lighthalzen",138,85,getcharid(1);
+}
+end;
+}
+
+bossnia_01 mapflag partylock
+bossnia_02 mapflag partylock
+bossnia_03 mapflag partylock
+bossnia_04 mapflag partylock
+bossnia_01 mapflag pvp
+bossnia_02 mapflag pvp
+bossnia_03 mapflag pvp
+bossnia_04 mapflag pvp

@@ -1,0 +1,18 @@
+prontera,163,194,6	script	Warper craft	4_MACHINE_DEVICE,{
+	mes "Gostaria de ir para area de craft?";
+	switch (select("Sim","Nao")) {
+		case 1:
+			warp "prontera",193,137;
+			break;	
+		
+		case 2:
+			mes "ok, fique ai entao";
+			break;	
+	}
+	end;
+	
+	OnInit:
+	waitingroom "[ CRAFT AREA ]",0;
+	end;
+	
+}

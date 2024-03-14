@@ -1,0 +1,56 @@
+prontera,169,180,1	script	Costume Trader 	2_SLOT_MACHINE,{
+	mes "[COSTUMER TRADER]";
+	mes "Eu consigo te dar um costume personalizado.";
+	mes "Mas vou precisar de 100kk.";
+	disable_items;
+	
+	function	delivery_costume	{
+
+		setarray .@costumesBasic,20763,20591,20502,20589,480056,480058,20511,20603,480252,20527,20504,20593,20510,20530,20619,20516,20525,20505,20599,20509,20526,20762,20528,20727,480123,20524,20765,20764,20737,20592,20584;
+		setarray .@costumesGood,20519,480097,20586,480221,480131,20538,20515,480203,20613;
+		setarray .@costumeGod,20535,480126,20597,20514,480169;
+		
+		.@r = rand(100);		
+		.@id  = 0;
+		
+		if (.@r >= 1 && .@r <= 94) {
+			.@size = getarraysize(.@costumesBasic);
+			.@id = .@costumesBasic[rand(.@size)];
+		} else if (.@r >= 95 && .@r <= 98) {
+			.@size = getarraysize(.@costumesGood);
+			.@id = .@costumesGood[rand(.@size)];
+		} else {
+			.@size = getarraysize(.@costumeGod);
+			.@id = .@costumeGod[rand(.@size)];
+		}
+	
+		return .@id;
+	}
+	
+	switch(select("Quero um costume","Nao quero nada")){
+	
+		case 1:
+			if(Zeny < 100000000){
+				mes"Voce nao tem dinheiro";
+				close;
+			}
+			.@item_give = delivery_costume();
+			zeny -= 100000000;			
+			getitem .@item_give,1;
+			
+			break;
+		case 2:
+		
+			mes"Ok, fica ai sem estilo";
+			break;
+		
+	}
+	
+	close;
+	
+	
+	OnInit:
+		waitingroom "[ COSTUME ]",0;
+		end;
+	
+}

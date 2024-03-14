@@ -1,0 +1,10 @@
+prontera,193,132,1	script	MODULE EXCHANGE	2_SLOT_MACHINE,{
+	mes "[MACHINE]";
+	mes "EAE PARCEIRO...";
+	mes "Eu consigo trocar seus modulos";
+	close3;
+}
+
+OnInit:
+	waitingroom "[ All In One Trader ]",0;
+	end;
